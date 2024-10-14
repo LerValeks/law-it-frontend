@@ -6,7 +6,8 @@ import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getAuth, provideAuth} from '@angular/fire/auth';
 import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {environments} from '../environments/environments.prod';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({eventCoalescing: true}), provideRouter(routes), provideFirebaseApp(() => initializeApp(environments.firebase)), provideAuth(() => getAuth()), provideMessaging(() => getMessaging())]
+  providers: [provideZoneChangeDetection({eventCoalescing: true}), provideRouter(routes), provideFirebaseApp(() => initializeApp(environments.firebase)), provideAuth(() => getAuth()), provideMessaging(() => getMessaging()), provideAnimationsAsync()]
 };
