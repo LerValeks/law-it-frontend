@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <mat-icon>business_center</mat-icon> <a style="color: white"
+ [routerLink]="['/']">Law-IT</a>
+  <span class="spacer"></span>
+  <div>
+    <a mat-button [routerLink]="['/shopping-cart']">Shopping Cart</a>
+  </div>
+  <button [matMenuTriggerFor]="appMenu" mat-raised-button color="accent"
+          [routerLink]="['/login']" routerLinkActive="routerLinkActive" *ngIf="displayName$ | async as displayName; else loginButton">
+    {{displayName}}
+  </button>
+  <ng-template #loginButton>
+    <button [routerLink]="['/login']" routerLinkActive="routerLinkActive" mat-raised-button color="accent">
+      Login
+    </button>
+  </ng-template>
+  <mat-menu #appMenu>
+    <button mat-menu-item [routerLink]="['/orders']" routerLinkActive="routerLinkActive">Orders</button>
+    <button mat-menu-item [routerLink]="['/manage-orders']" routerLinkActive="routerLinkActive">Manage Orders</button>
+    <button mat-menu-item [routerLink]="['/manage-products']" routerLinkActive="routerLinkActive">Manage Products</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+
+</mat-toolbar>

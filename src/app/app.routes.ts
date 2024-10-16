@@ -7,15 +7,16 @@ import {NoAccessComponent} from './components/no-access/no-access.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {ShoppingCartComponent} from './components/shopping-cart/shopping-cart.component';
 import {OrdersComponent} from './components/orders/orders.component';
+import {authGuard} from './guards/auth.guard';
 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'shopping', component: ShoppingCartComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'manage-orders', component: ManageOrdersComponent },
-  { path: 'manage-products', component: ManageProductsComponent },
+  { path: 'shopping-cart', component: ShoppingCartComponent, canActivate: [authGuard] },
+  { path: 'orders', component: OrdersComponent, canActivate: [authGuard] },
+  { path: 'manage-orders', component: ManageOrdersComponent, canActivate: [authGuard] },
+  { path: 'manage-products', component: ManageProductsComponent, canActivate: [authGuard] },
   { path: 'no-access', component: NoAccessComponent },
   { path: '**', component: NotFoundComponent }
 ];

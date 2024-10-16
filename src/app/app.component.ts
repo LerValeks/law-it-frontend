@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
+import {SessionTimeoutService} from './services/session-timeout.service';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,6 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 })
 export class AppComponent {
   title = 'law-it-frontend';
+
+  constructor(private sessionTimeoutService: SessionTimeoutService) {}
 }
