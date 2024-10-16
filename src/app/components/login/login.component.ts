@@ -1,19 +1,33 @@
 import {Component} from '@angular/core';
-import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../services/auth.service';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ButtonModule} from 'primeng/button';
+import {NgClass} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    MatButton
-  ],
+  imports: [ButtonModule, NgClass, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  form!: FormGroup;
+  submitted = false;
+  loading = false;
+  errorMessage: string | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor( private formBuilder: FormBuilder,
+               private authService: AuthService) {
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
+
+  get f() {
+    return this.form.controls;
   }
 
   loginGoogle() {
@@ -33,8 +47,25 @@ export class LoginComponent {
     this.authService.loginFacebook().then(r => alert("Facebook Requires App to be Registered. Thus stays for later implementation"));
   }
 
-  loginEmail() {
-    console.log("Pressed login facebook")
-    this.authService.loginEmail().then(r => alert("Didn't work"));
+
+
+  onSubmit(): void {
+    this.submitted = true;
+
+    // Stop here if the form is invalid
+    if (this.form.invalid) {
+      return;
+    }
+    this.loading = true;
+    this.authService
+      .loginEmail(this.f['username'].value, this.f['password'].value)
+      .then(() => {
+      })
+      .catch((error) => {
+        console.error('Error logging in:', error);
+        this.errorMessage = "Invalid email or password"; // Set error message
+        this.loading = false;
+      });
   }
 }
+

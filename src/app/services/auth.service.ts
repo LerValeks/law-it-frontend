@@ -52,15 +52,15 @@ export class AuthService {
     }
   }
 
-  async loginEmail(): Promise<void> {
+  async loginEmail(email: string, password: string ): Promise<void> {
 
-    // try {
-    //   const result = await signInWithEmailAndPassword (this.auth, email, password)
-    //   const user = result.user; // User info
-    //   console.log('User signed in:', user);
-    // } catch (error) {
-    //   console.error('Error signing in with Google:', error);
-    // }
+    try {
+      const result = await signInWithEmailAndPassword (this.auth, email, password)
+      const user = result.user; // User info
+      console.log('User signed in:', user);
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+    }
   }
 
   logout(): void {
