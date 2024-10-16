@@ -18,21 +18,21 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <label for="email">Email</label>
       <input
-        type="email"
+        type="text"
         id="email"
         formControlName="email"
-        placeholder="test@atheros.ai">
+        placeholder="test@atheros.ai" required>
       <label for="password">Password</label>
       <input
-        type="password"
+        type="text"
         id="password"
         formControlName="password"
-        placeholder="******">
+        placeholder="******" required>
       <button type="submit" class="btn btn-signin" [disabled]="loading">
         Sign In
       </button>
       <div *ngIf="errorMessage" class="text-danger">
-        {{ errorMessage }}  <!-- Display error message -->
+        {{ errorMessage }}
       </div>
     </form>
     <p>Don't have an account? <a routerLink="../register">Sign Up Now</a></p>

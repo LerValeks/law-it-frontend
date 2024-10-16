@@ -1,19 +1,20 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {NgClass} from '@angular/common';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ButtonModule, NgClass, ReactiveFormsModule, CommonModule],
+  imports: [ButtonModule, NgClass, CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  form!: FormGroup;
+  form: FormGroup;
   submitted = false;
   loading = false;
   errorMessage: string | null = null;
@@ -25,6 +26,8 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
+
+  ngOnInit(): void {}
 
   get f() {
     return this.form.controls;
@@ -51,19 +54,22 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.submitted = true;
+    this.errorMessage = null; // Reset error message
 
-    // Stop here if the form is invalid
-    if (this.form.invalid) {
-      return;
-    }
+    const { email, password } = this.form.value;
     this.loading = true;
-    this.authService
-      .loginEmail(this.f['username'].value, this.f['password'].value)
+
+    this.authService.loginEmail(email, password)
       .then(() => {
+        console.log("Login successful");
+        // Handle successful login, e.g., navigate to a different page
       })
       .catch((error) => {
-        console.error('Error logging in:', error);
+        console.error("Error logging in:", error);
+        // Show error message
         this.errorMessage = "Invalid email or password"; // Set error message
+      })
+      .finally(() => {
         this.loading = false;
       });
   }

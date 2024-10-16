@@ -60,6 +60,7 @@ export class AuthService {
       console.log('User signed in:', user);
     } catch (error) {
       console.error('Error signing in with Google:', error);
+      throw error;
     }
   }
 
